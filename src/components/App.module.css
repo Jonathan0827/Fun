@@ -1,0 +1,8 @@
+.greyLink {
+    color: #c3c3c3;
+    text-decoration: none;
+
+    &:hover {
+        color: #bcbcbc;
+    }
+}

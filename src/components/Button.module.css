@@ -1,0 +1,15 @@
+.default {
+    background-color: #118bee;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: white;
+}
+
+.pill {
+    background-color: #118bee;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 25px;
+    color: white;
+}
