@@ -17,11 +17,23 @@ function Home() {
   const [problems, setProblems] = React.useState([]);
   const [solved, setSolved] = React.useState([]);
   const [showP, setShowP] = React.useState(false);
-  const [showA, setShowA] = React.useState(false);
+  const [correctAns, setCorrectAns] = React.useState(false);
+  const [incorrectAns, setIncorrectAns] = React.useState(false);
+  const [sAnswer, setSAnswer] = React.useState("");
+  const [showAnswer, setShowAnswer] = React.useState(false);
   const [problem, setProblem] = React.useState({});
+  const [shownQuests, setShownQuests] = React.useState([]);
   const reqRandomQuest = () => {
-    setProblem(problems[Math.floor(Math.random() * problems.length)]);
-    setShowA(false);
+    let randomNum = Math.floor(Math.random() * problems.length);
+    while (shownQuests.includes(randomNum)) {
+      randomNum = Math.floor(Math.random() * problems.length);
+    }
+    document.getElementById("answer").value = "";
+    setProblem(problems[randomNum]);
+    setShowAnswer(false);
+    setCorrectAns(false);
+    setIncorrectAns(false);
+    setShownQuests([...shownQuests, randomNum]);
   };
   const loadQuestion = () => {
     sleep(250).then(() => {
@@ -47,8 +59,29 @@ function Home() {
         });
     });
   };
-  const showAnswer = () => {
-    setShowA(true);
+  const checkAnswer = () => {
+    // (true);
+    const answer = document.getElementById("answer");
+    console.log(answer.value);
+    if (answer.value == problem.answer) {
+      console.log("correct");
+      setCorrectAns(true);
+      setIncorrectAns(false);
+    } else {
+      console.log("incorrect");
+      setIncorrectAns(true);
+      setCorrectAns(false);
+    }
+  };
+  const revealAnswer = () => {
+    setShowAnswer(true);
+    setCorrectAns(false);
+    setIncorrectAns(false);
+  };
+  const submitAnswer = (event) => {
+    event.preventDefault();
+    setSAnswer(event.target.value);
+    checkAnswer();
   };
   const addSolved = (num) => {
     setSolved([...solved, num]);
@@ -64,6 +97,12 @@ function Home() {
       );
     }
   };
+  const handleKeyPress = (event) => {
+    // if (e.key === "Enter") {
+    //   submitAnswer();
+    // }
+    console.log(event);
+  };
   return (
     <div>
       {/*<link*/}
@@ -75,11 +114,40 @@ function Home() {
         <div>
           <div>
             <h1>{problem.quiz}</h1>
-            <Btn title="정답 보기" type="contained" onclick={showAnswer} />
-            {/*<h2>{problem}</h2>*/}
-            {showA ? (
+          </div>
+          <form onSubmit={submitAnswer}>
+            <div>
+              <input
+                placeholder="여기에 정답을 적으세요."
+                // type=
+                // value={}
+                id="answer"
+                // onKeyDown={(event) => console.log(event.target.value)}
+              />
+            </div>
+          </form>
+          <div>
+            <br />
+            <Btn title="정답 확인하기" type="contained" onclick={checkAnswer} />
+            <Btn title="정답 보기" type="outlined" onclick={revealAnswer} />
+            {showAnswer ? (
               <div>
-                <h3>{problem.answer}</h3>
+                <h3>
+                  {problem.answer.map((ans) => {
+                    return `"${ans}" `;
+                  })}
+                </h3>
+              </div>
+            ) : null}
+
+            {correctAns ? (
+              <div>
+                <h3>맞았습니다!</h3>
+              </div>
+            ) : null}
+            {incorrectAns ? (
+              <div>
+                <h3>틀렸습니다!</h3>
               </div>
             ) : null}
           </div>
@@ -115,7 +183,7 @@ function Home() {
 //       <LoadingButton loading variant="contained">
 //         <span>로딩중...     </span>
 //       </LoadingButton>
-//     );
+//     ); </s
 //   }
 //   // )
 // }

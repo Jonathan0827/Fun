@@ -7,7 +7,7 @@ function Btn({ title, type, onclick }) {
     // <button className={styles.default} onClick={onclick}>
     //   {title}
     // </button>
-    <Button variant={type} onClick={onclick} className={styles.pill}>
+    <Button variant={type} onClick={onclick} className={styles.default}>
       {title}
     </Button>
   );

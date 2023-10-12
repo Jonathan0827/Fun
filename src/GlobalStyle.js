@@ -9,5 +9,16 @@ const GlobalStyle = createGlobalStyle`
     text-align: center;
     margin-top: 10vh
   }
+
+  .btn {
+    margin: 10px;
+  }
+
+  input {
+    padding: 5px 10px;
+    border: #8d8d8d 1px solid;
+    border-radius: 25px;
+    box-shadow: 0 0 5px #8d8d8d;
+  }
 `;
 export default GlobalStyle;
