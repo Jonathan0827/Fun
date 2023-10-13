@@ -23,12 +23,18 @@ function Home() {
   const [showAnswer, setShowAnswer] = React.useState(false);
   const [problem, setProblem] = React.useState({});
   const [shownQuests, setShownQuests] = React.useState([]);
+  const [corrects, setCorrects] = React.useState(0);
+  const [incorrects, setIncorrects] = React.useState(0);
+  const [skips, setSkips] = React.useState(0);
+  const [disableInput, setDisableInput] = React.useState(false);
   const reqRandomQuest = () => {
     let randomNum = Math.floor(Math.random() * problems.length);
     while (shownQuests.includes(randomNum)) {
       randomNum = Math.floor(Math.random() * problems.length);
     }
+
     document.getElementById("answer").value = "";
+    setDisableInput(false);
     setProblem(problems[randomNum]);
     setShowAnswer(false);
     setCorrectAns(false);
@@ -36,7 +42,7 @@ function Home() {
     setShownQuests([...shownQuests, randomNum]);
   };
   const loadQuestion = () => {
-    sleep(250).then(() => {
+    sleep(0.2).then(() => {
       setBtn(false);
       setTitle("로딩중...");
       fetch(
@@ -59,7 +65,16 @@ function Home() {
         });
     });
   };
-  const checkAnswer = () => {
+
+  function sleep(sec) {
+    return new Promise((resolve) => setTimeout(resolve, sec * 1000));
+  } // 함수정의
+  // function sleep(ms) {
+  //   const wakeUpTime = Date.now() + ms;
+  //   while (Date.now() < wakeUpTime) {}
+  // }
+
+  const checkAnswer = async () => {
     // (true);
     const answer = document.getElementById("answer");
     console.log(answer.value);
@@ -67,10 +82,24 @@ function Home() {
       console.log("correct");
       setCorrectAns(true);
       setIncorrectAns(false);
+      setCorrects((current) => current + 1);
+      setDisableInput(true);
+      await sleep(2);
+      console.log("next");
+      reqRandomQuest();
+      // setTimeout(() => {
+
+      //
+      // }, 2000);
     } else {
       console.log("incorrect");
       setIncorrectAns(true);
       setCorrectAns(false);
+      setIncorrects((current) => current + 1);
+      setDisableInput(true);
+      await sleep(2);
+      console.log("next");
+      reqRandomQuest();
     }
   };
   const revealAnswer = () => {
@@ -114,6 +143,7 @@ function Home() {
         <div>
           <div>
             <h1>{problem.quiz}</h1>
+            <h2>{`맞은 문제: ${corrects}, 틀린 문제: ${incorrects}, 넘어간 문제: ${skips}`}</h2>
           </div>
           <form onSubmit={submitAnswer}>
             <div>
@@ -122,6 +152,7 @@ function Home() {
                 // type=
                 // value={}
                 id="answer"
+                disabled={disableInput}
                 // onKeyDown={(event) => console.log(event.target.value)}
               />
             </div>
