@@ -4,7 +4,7 @@
 
 # Changelog
 
-## Oct 12, 2023
+## [Oct 12, 2023](fun-3g401cfbv-jonathan0827.vercel.app)
 
 ### 한국어
 
@@ -20,7 +20,7 @@
 - Changed domain to [https://reacts.kro.kr](https://reacts.kro.kr) (Old domain will redirect to new domain)
 - Improved overall code
 
-## Oct 11, 2023
+## [Oct 11, 2023](fun-1c3pzdfcv-jonathan0827.vercel.app)
 
 ### 한국어
 
