@@ -16,7 +16,7 @@ const style = {
   p: 4,
 };
 const IOSURL =
-  '"https://cococloud-signing.online/free-plist?url=https://reacts.kro.kr/installers/Fun.ipa"';
+  "https://cococloud-signing.online/free-plist?url=https://reacts.kro.kr/installers/Fun.ipa";
 
 function InatallView() {
   const [signed, setSigned] = useState("");
