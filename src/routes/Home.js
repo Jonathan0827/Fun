@@ -1,10 +1,9 @@
 import styles from "../components/App.module.css";
 import { Btn, DBtn } from "../components/Button";
-import ReactModal from "react-modal";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
-// import BtnInHome from "../components/ButtonInHome";
+import { Alert, AlertTitle, TextField, Grow, Slide } from "@mui/material";
 
 const sleep = (ms) => {
   return new Promise((r) => setTimeout(r, ms));
@@ -27,7 +26,7 @@ function Home() {
   const [incorrects, setIncorrects] = React.useState(0);
   const [skips, setSkips] = React.useState(0);
   const [disableInput, setDisableInput] = React.useState(false);
-  const [isSigned, setIsSigned] = React.useState("");
+  const [isPWA, setIsPWA] = React.useState("Unchecked");
 
   const reqRandomQuest = () => {
     let randomNum = Math.floor(Math.random() * problems.length);
@@ -52,16 +51,11 @@ function Home() {
       )
         .then((res) => res.json())
         .then((json) => {
-          // console.log(
-          //   json.problems[Math.floor(Math.random() * json.problems.length)]
-          // );
           setProblems(json.problems);
-          // reqRandomQuest();
           setProblem(
             json.problems[Math.floor(Math.random() * problems.length)],
           );
 
-          console.log(json.problems);
           setShowP(true);
           setTitle("");
         });
@@ -70,14 +64,26 @@ function Home() {
 
   function sleep(sec) {
     return new Promise((resolve) => setTimeout(resolve, sec * 1000));
-  } // 함수정의
-  // function sleep(ms) {
-  //   const wakeUpTime = Date.now() + ms;
-  //   while (Date.now() < wakeUpTime) {}
-  // }
+  }
 
-  const checkAnswer = async () => {
+  useEffect(() => {
+    async function checkPWA() {
+      await sleep(1);
+      if (window.matchMedia("(display-mode: standalone)").matches) {
+        setIsPWA("PWA");
+        console.log("PWA");
+      } else {
+        setIsPWA("Not PWA");
+        console.log("Not PWA");
+      }
+    }
+
+    checkPWA().then((r) => console.log("Checked PWA"));
+  }, []);
+  const checkAnswer = async (event) => {
     // (true);
+    event.preventDefault();
+
     const answer = document.getElementById("answer");
     console.log(answer.value);
     if (answer.value == problem.answer) {
@@ -97,6 +103,7 @@ function Home() {
       console.log("incorrect");
       setIncorrectAns(true);
       setCorrectAns(false);
+      setShowAnswer(true);
       setIncorrects((current) => current + 1);
       setDisableInput(true);
       await sleep(2);
@@ -114,11 +121,10 @@ function Home() {
     console.log("next");
     reqRandomQuest();
   };
-  const submitAnswer = (event) => {
-    event.preventDefault();
-    setSAnswer(event.target.value);
-    checkAnswer();
-  };
+  // const submitAnswer = (event) => {
+  //   event.preventDefault();
+  //   checkAnswer();
+  // };
   const addSolved = (num) => {
     setSolved([...solved, num]);
   };
@@ -133,70 +139,88 @@ function Home() {
       );
     }
   };
-  const handleKeyPress = (event) => {
-    // if (e.key === "Enter") {
-    //   submitAnswer();
-    // }
-    console.log(event);
-  };
   return (
     <div>
-      {/*<link*/}
-      {/*  rel="stylesheet"*/}
-      {/*  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"*/}
-      {/*/>*/}
       <h1>{title}</h1>
       {showP ? (
-        <div>
-          <div>
-            <h1>{problem.quiz}</h1>
-            <h2>{`맞은 문제: ${corrects}, 틀린 문제: ${incorrects}, 넘어간 문제: ${skips}`}</h2>
-          </div>
-          <form onSubmit={submitAnswer}>
+        <Grow in={showP}>
+          <div id={"ProblemSolvingView"}>
             <div>
-              <input
-                placeholder="여기에 정답을 적으세요."
-                // type=
-                // value={}
-                id="answer"
-                disabled={disableInput}
-                // onKeyDown={(event) => console.log(event.target.value)}
+              <h1>{problem.quiz}</h1>
+              <h3>{`맞은 문제: ${corrects}, 틀린 문제: ${incorrects}, 넘어간 문제: ${skips}`}</h3>
+            </div>
+            <form onSubmit={checkAnswer}>
+              <div>
+                <TextField
+                  id="answer"
+                  label="여기에 정답을 입력하세요"
+                  variant="standard"
+                  disabled={disableInput}
+                />
+                {/*<input*/}
+                {/*  placeholder="여기에 정답을 적으세요."*/}
+                {/*  id="answer"*/}
+                {/*  disabled={disableInput}*/}
+                {/*/>*/}
+              </div>
+            </form>
+            <div>
+              {/*<br />*/}
+              <Btn
+                title="정답 확인하기"
+                type="contained"
+                onclick={checkAnswer}
+              />
+              <Btn title="정답 보기" type="outlined" onclick={revealAnswer} />
+              {showAnswer ? (
+                <div>
+                  <h3>
+                    {problem.answer.map((ans) => {
+                      return `"${ans}" `;
+                    })}
+                  </h3>
+                </div>
+              ) : null}
+              {correctAns ? (
+                <div>
+                  <h3>맞았습니다!</h3>
+                </div>
+              ) : null}
+              {incorrectAns ? (
+                <div>
+                  <h3>틀렸습니다!</h3>
+                </div>
+              ) : null}
+            </div>
+            &nbsp;
+            <div>
+              <Btn
+                title="다음 문제"
+                type="contained"
+                onclick={reqRandomQuest}
               />
             </div>
-          </form>
-          <div>
-            <br />
-            <Btn title="정답 확인하기" type="contained" onclick={checkAnswer} />
-            <Btn title="정답 보기" type="outlined" onclick={revealAnswer} />
-            {showAnswer ? (
-              <div>
-                <h3>
-                  {problem.answer.map((ans) => {
-                    return `"${ans}" `;
-                  })}
-                </h3>
-              </div>
-            ) : null}
-
-            {correctAns ? (
-              <div>
-                <h3>맞았습니다!</h3>
-              </div>
-            ) : null}
-            {incorrectAns ? (
-              <div>
-                <h3>틀렸습니다!</h3>
-              </div>
-            ) : null}
           </div>
-          &nbsp;
-          <div>
-            <Btn title="다음 문제" type="contained" onclick={reqRandomQuest} />
-          </div>
-        </div>
+        </Grow>
       ) : (
         Btns()
       )}
+      <Slide direction="up" in={isPWA == "Not PWA"}>
+        <div className={styles.smallAlertContainer}>
+          <Link to={"/install"}>
+            <Alert severity="info">
+              {/*<AlertTitle>*/}
+              {/*  <strong>앱 설치</strong>*/}
+              {/*</AlertTitle>*/}
+              <strong>
+                이 페이지는 앱으로 설치할 수 있습니다.
+                <br />
+                (이 알림을 누르면 설치 페이지로 이동합니다.)
+              </strong>
+            </Alert>
+          </Link>
+        </div>
+      </Slide>
       <h3>
         참고로 여기 나오는 문제들은 제가 출제하지 <mark>않았습니다</mark>.
         <br />
@@ -207,28 +231,8 @@ function Home() {
           여기에서 가져옴
         </a>
       </h3>
-      {/*<h1></h1>*/}
-      <Link to={"/install"}>
-        <Btn title="앱 설치하기" type="contained" />
-      </Link>
-      {/*<h5>iOS: {isSigned == "" ? "Loading..." : isSigned}</h5>*/}
-      {/*<span className="material-symbols-outlined">arrow_downward</span>*/}
     </div>
   );
 }
-
-// function BtnInHome(tof) {
-//   // return (
-//   if (tof) {
-//     return <Btn title="시작하기" type="contained"  onclick()/>;
-//   } else {
-//     return (
-//       <LoadingButton loading variant="contained">
-//         <span>로딩중...     </span>
-//       </LoadingButton>
-//     ); </s
-//   }
-//   // )
-// }
 
 export default Home;

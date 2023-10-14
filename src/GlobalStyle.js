@@ -6,7 +6,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     //background-color: #323336;
     //color: #FFFFFF;
-    text-align: center;
+    text-align: center !important;
     margin-top: 10vh
   }
 
@@ -14,16 +14,32 @@ const GlobalStyle = createGlobalStyle`
     margin: 10px;
   }
 
-  input {
-    padding: 5px 10px;
-    border: #8d8d8d 1px solid;
-    border-radius: 25px;
-    box-shadow: 0 0 5px #8d8d8d;
+  a {
+    text-decoration: none !important;
+    color: #118bee !important;
   }
 
-  a {
-    text-decoration: none !important
-    color: #118bee !important;
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .ProblemSolvingView {
+    animation: fadeIn 0.5s forwards;
+    animation-delay: 0.1s;
   }
 `;
 export default GlobalStyle;

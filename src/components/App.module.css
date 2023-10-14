@@ -6,3 +6,11 @@
         color: #bcbcbc;
     }
 }
+
+.smallAlertContainer {
+    /*max-width: 40vw;*/
+    position: fixed;
+    bottom: 20px;
+    right: 20px
+    /*justify-content: left !important;*/
+}

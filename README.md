@@ -4,7 +4,21 @@
 
 # Changelog
 
-## [Oct 13, 2023]()
+## [Oct 14, 2023](https://reacts.kro.kr)
+
+### 한국어
+
+- 전반적인 UI 개선
+- 기본적인 문제풀이 점수계산 기능 추가
+- 앱 설치기능 추가
+- Git 업데이트 자동화 스크립트 추가
+
+### English
+
+- Improved overall UI
+- Added basic problem-solving score calculation function
+- Added app installation function
+- Added Git update automation script
 
 ## [Oct 12, 2023](https://fun-3g401cfbv-jonathan0827.vercel.app)
 
