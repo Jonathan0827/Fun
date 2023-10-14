@@ -1,7 +1,5 @@
 # Fun
 
-### Smile!
-
 # Changelog
 
 ## [Oct 14, 2023](https://reacts.kro.kr)
