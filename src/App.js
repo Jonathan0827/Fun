@@ -2,7 +2,8 @@ import React from "react";
 import Home from "./routes/Home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import GlobalStyle from "./GlobalStyle";
-import Question from "./routes/Question";
+// import Question from "./routes/Question";
+import InstallView from "./routes/Install";
 
 function App() {
   return (
@@ -12,8 +13,8 @@ function App() {
         <Route path="/" exact>
           <Home />
         </Route>
-        <Route path="/start" exact>
-          <Question />
+        <Route path="/install" exact>
+          <InstallView />
         </Route>
       </Switch>
     </Router>

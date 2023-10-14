@@ -20,5 +20,10 @@ const GlobalStyle = createGlobalStyle`
     border-radius: 25px;
     box-shadow: 0 0 5px #8d8d8d;
   }
+
+  a {
+    text-decoration: none !important
+    color: #118bee !important;
+  }
 `;
 export default GlobalStyle;

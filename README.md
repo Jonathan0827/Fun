@@ -4,6 +4,8 @@
 
 # Changelog
 
+## [Oct 13, 2023]()
+
 ## [Oct 12, 2023](https://fun-3g401cfbv-jonathan0827.vercel.app)
 
 ### 한국어

@@ -1,6 +1,6 @@
 {
-  "short_name": ".",
-  "name": ".",
+  "short_name": "Fun",
+  "name": "Fun",
   "icons": [
     {
       "src": "favicon.ico",
@@ -15,10 +15,11 @@
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any"
     }
   ],
-  "start_url": ".",
+  "start_url": "Fun",
   "display": "standalone",
   "theme_color": "#ffffff",
   "background_color": "#ffffff"

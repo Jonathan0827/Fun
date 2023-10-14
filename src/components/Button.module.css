@@ -1,8 +1,8 @@
 .default {
     background-color: #118bee;
     border: none;
-    padding: 5px 10px;
-    border-radius: 10px;
+    padding: 5px 10px !important;
+    border-radius: 15px !important;
     color: white;
     margin: 5px !important;
 }

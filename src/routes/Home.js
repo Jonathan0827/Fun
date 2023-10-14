@@ -27,6 +27,8 @@ function Home() {
   const [incorrects, setIncorrects] = React.useState(0);
   const [skips, setSkips] = React.useState(0);
   const [disableInput, setDisableInput] = React.useState(false);
+  const [isSigned, setIsSigned] = React.useState("");
+
   const reqRandomQuest = () => {
     let randomNum = Math.floor(Math.random() * problems.length);
     while (shownQuests.includes(randomNum)) {
@@ -102,10 +104,15 @@ function Home() {
       reqRandomQuest();
     }
   };
-  const revealAnswer = () => {
+  const revealAnswer = async () => {
+    setSkips((current) => current + 1);
+    setDisableInput(true);
     setShowAnswer(true);
     setCorrectAns(false);
     setIncorrectAns(false);
+    await sleep(2);
+    console.log("next");
+    reqRandomQuest();
   };
   const submitAnswer = (event) => {
     event.preventDefault();
@@ -200,6 +207,11 @@ function Home() {
           여기에서 가져옴
         </a>
       </h3>
+      {/*<h1></h1>*/}
+      <Link to={"/install"}>
+        <Btn title="앱 설치하기" type="contained" />
+      </Link>
+      {/*<h5>iOS: {isSigned == "" ? "Loading..." : isSigned}</h5>*/}
       {/*<span className="material-symbols-outlined">arrow_downward</span>*/}
     </div>
   );
