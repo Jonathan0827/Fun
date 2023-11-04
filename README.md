@@ -2,6 +2,26 @@
 
 # Changelog
 
+## Nov 4, 2023
+
+### 한국어
+
+- MUI를 이용하는 요소들의 디자인 개선
+- 처음 출제되는 문제가 고정되어 있던 문제 해결
+- 점수기능 추가
+- 로그인 기능 추가
+- 버그 수정
+- 설치 페이지 삭제
+
+### English
+
+- Improved the design of elements using MUI
+- Fixed an issue where the first question was fixed
+- Added score function
+- Added login function
+- Bug fixes
+- Removed installation page
+
 ## [Oct 14, 2023](https://reacts.kro.kr)
 
 ### 한국어

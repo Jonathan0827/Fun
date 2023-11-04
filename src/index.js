@@ -1,15 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-// import styles from "./Root.css";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
-// const root = ReactDOM.createRoot(document.getElementById("root"));
 class Root extends React.Component {
   render() {
     return (
-      // <div id={styles.root}>
-      <App />
-      // </div>
+      <GoogleOAuthProvider
+        clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}
+        onScriptLoadError={() => console.log("실패")}
+        onScriptLoadSuccess={() => console.log("성공")}
+      >
+        <App />
+      </GoogleOAuthProvider>
     );
   }
 }

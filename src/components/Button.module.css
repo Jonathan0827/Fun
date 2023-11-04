@@ -1,7 +1,33 @@
 .default {
-    background-color: #118bee;
+    /*background-color: #118bee;*/
+    background: linear-gradient(0deg, rgba(3, 123, 243, 1) 0%, rgba(48, 151, 254, 1) 100%);
     border: none;
-    padding: 5px 10px !important;
+    /*padding: 10px 15px !important;*/
+    border-radius: 15px !important;
+    color: white !important;
+    margin: 5px !important;
+}
+
+.outlined {
+    /*background-color: #118bee;*/
+    /*padding: 10px 15px !important;*/
+    border-radius: 15px !important;
+    margin: 5px !important;
+}
+
+.google {
+    /*background-color: #000000 !important;*/
+    border: none;
+    background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgb(86, 86, 86) 100%) !important;
+    padding: 7px 15px !important;
+    border-radius: 15px !important;
+    color: white !important;
+    margin: 5px !important;
+}
+
+.loading {
+    border: none;
+    padding: 15px 10px !important;
     border-radius: 15px !important;
     color: white;
     margin: 5px !important;
