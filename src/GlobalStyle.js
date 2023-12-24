@@ -10,6 +10,18 @@ const GlobalStyle = createGlobalStyle`
     justify-content: center !important;
 
   }
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 5vh;
+    background-color: #ffffff;
+    color: #000000;
+    text-align: center;
+    box-shadow: none !important;
+  }
+
 
   .btn {
     margin: 10px;

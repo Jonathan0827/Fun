@@ -9,7 +9,7 @@ function Btn({ title, type, onclick }) {
   // <button className={styles.default} onClick={onclick}>
   //   {title}
   // </button>
-  if (type == "contained" || type.length == 0) {
+  if (type == "contained" || type == null) {
     return (
       <Button
         variant={"contained"}

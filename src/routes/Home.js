@@ -15,9 +15,7 @@ import { LoginView } from "../components/Login";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import Button from "@mui/material/Button";
 import axios from "axios";
-
-const jwt = require("jsonwebtoken");
-
+import AuthToken from "../AESAuthToken";
 // https://raw.githubusercontent.com/Team-WAVE-x/Stop-uncle/master/src/ajegag.json
 function Home() {
   // check if development
@@ -50,19 +48,19 @@ function Home() {
       return "https://api.reacts.kro.kr";
     }
   };
+  const inDevelopment = () => {
+    if (process.env.NODE_ENV == "development") {
+      return true;
+    } else {
+      return false;
+    }
+  };
   useEffect(() => {
     if (localStorage.getItem("UserToken")) {
       axios
         .get(`${apiPath()}/getscore?sub=${localStorage.getItem("UserSub")}`, {
           headers: {
-            Authorization: jwt.sign(
-              { type: "JWT", sub: localStorage.getItem("UserToken") },
-              AUTH_KEY,
-              {
-                expiresIn: "10s",
-                issuer: "FunGoogleLogin",
-              },
-            ),
+            Authorization: AuthToken(localStorage.getItem("UserSub")),
           },
         })
         .then((res) => {
@@ -80,16 +78,9 @@ function Home() {
           },
           {
             headers: {
-              Authorization: jwt.sign(
-                { type: "JWT", sub: localStorage.getItem("UserToken") },
-                AUTH_KEY,
-                {
-                  expiresIn: "10s",
-                  issuer: "FunGoogleLogin",
-                },
-              ),
+              Authorization: AuthToken(localStorage.getItem("UserSub")),
             },
-          },
+          }
         )
         .then((res) => {
           setScore(res.data.score);
@@ -107,16 +98,9 @@ function Home() {
           },
           {
             headers: {
-              Authorization: jwt.sign(
-                { type: "JWT", sub: localStorage.getItem("UserToken") },
-                AUTH_KEY,
-                {
-                  expiresIn: "10s",
-                  issuer: "FunGoogleLogin",
-                },
-              ),
+              Authorization: AuthToken(localStorage.getItem("UserSub")),
             },
-          },
+          }
         )
         .then((res) => {
           setScore(res.data.score);
@@ -174,17 +158,17 @@ function Home() {
       setBtn(false);
       setTitle("로딩중...");
       fetch(
-        `https://raw.githubusercontent.com/Team-WAVE-x/Stop-uncle/master/src/ajegag.json`,
+        `https://raw.githubusercontent.com/Team-WAVE-x/Stop-uncle/master/src/ajegag.json`
       )
         .then((res) => res.json())
         .then((json) => {
           setProblems(json.problems);
           setProblem(
-            json.problems[Math.floor(Math.random() * json.problems.length)],
+            json.problems[Math.floor(Math.random() * json.problems.length)]
           );
           setHideP(false);
           setShowP(true);
-          setTitle("");
+          setTitle("문제풀이");
         });
     });
   };
@@ -421,7 +405,10 @@ function Home() {
                 title="돌아가기"
                 type="outlined"
                 onclick={() => {
-                  window.location.reload();
+                  setShowP(false);
+                  setHideP(true);
+                  setBtn(true);
+                  setTitle("시작하기 버튼을 눌러서 시작하세요");
                 }}
               />
 
@@ -466,57 +453,53 @@ function Home() {
       {/*    </Link>*/}
       {/*  </div>*/}
       {/*</Slide>*/}
-      <h3>
-        참고로 여기 나오는 문제들은 제가 출제하지 <mark>않았습니다</mark>.
-        <br />
+      {/* <h3> */}
+
+      {/* </h3> */}
+      {inDevelopment() ? (
+        <div id="Dev Tools">
+          <Btn
+            title="AUTH TEST"
+            onclick={() => {
+              axios
+                .post(
+                  `${apiPath()}/test`,
+                  {
+                    sub: localStorage.getItem("UserSub"),
+                  },
+                  {
+                    headers: {
+                      Authorization: AuthToken(localStorage.getItem("UserSub")),
+                    },
+                  }
+                )
+                .then((res) => {
+                  window.alert(JSON.stringify(res.data));
+                });
+            }}
+          />
+          <Btn
+            title={"Clear Login Info"}
+            type={"outlined"}
+            onclick={() => {
+              localStorage.removeItem("UserToken");
+              localStorage.removeItem("UserName");
+              localStorage.removeItem("UserEmail");
+              localStorage.removeItem("ProfilePic");
+              window.location.reload();
+              enqueueSnackbar("Done", { variant: "success" });
+            }}
+          />
+        </div>
+      ) : null}
+      <footer>
         <a
           href="https://github.com/Team-WAVE-x/Stop-uncle"
           className={styles.greyLink}
         >
-          여기에서 가져옴
+          문제 출처
         </a>
-      </h3>
-      {/*<div>*/}
-      {/*  <Btn*/}
-      {/*    title={"Clear Login Info"}*/}
-      {/*    type={"outlined"}*/}
-      {/*    onclick={() => {*/}
-      {/*      localStorage.removeItem("UserToken");*/}
-      {/*      localStorage.removeItem("UserName");*/}
-      {/*      localStorage.removeItem("UserEmail");*/}
-      {/*      localStorage.removeItem("ProfilePic");*/}
-      {/*      window.location.reload();*/}
-      {/*      enqueueSnackbar("Done", { variant: "success" });*/}
-      {/*    }}*/}
-      {/*  />*/}
-      {/*  <Btn*/}
-      {/*    title={"Score Test"}*/}
-      {/*    type={"outlined"}*/}
-      {/*    onclick={() => {*/}
-      {/*      // fetch(`${apiPath()}/score`, {*/}
-      {/*      //   method: "POST",*/}
-      {/*      //   headers: {*/}
-      {/*      //     Authorization: jwt.sign(*/}
-      {/*      //       { type: "JWT", sub: localStorage.getItem("UserToken") },*/}
-      {/*      //       AUTH_KEY,*/}
-      {/*      //       {*/}
-      {/*      //         expiresIn: "10s",*/}
-      {/*      //         issuer: "FunGoogleLogin",*/}
-      {/*      //       },*/}
-      {/*      //     ),*/}
-      {/*      //   },*/}
-      {/*      //   body: JSON.stringify({*/}
-      {/*      //     sub: localStorage.getItem("UserSub"),*/}
-      {/*      //   }),*/}
-      {/*      // })*/}
-      {/*      //   .then((res) => res.json())*/}
-      {/*      //   .then((json) => {*/}
-      {/*      //     console.log(json);*/}
-      {/*      //   });*/}
-      {/*     */}
-      {/*    }}*/}
-      {/*  />*/}
-      {/*</div>*/}
+      </footer>
     </div>
   );
 }

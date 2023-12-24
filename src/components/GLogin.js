@@ -3,14 +3,10 @@ import React, { useEffect } from "react";
 import { Btn, GBtn } from "./Button";
 import axios from "axios";
 import { Alert, Backdrop } from "@mui/material";
-
-const jwt = require("jsonwebtoken");
-
-const AUTH_KEY = process.env.REACT_APP_AUTH_KEY;
+import { AuthToken } from "../AESAuthToken";
 
 function GoogleAuthLogin({ title }) {
   const [showLoading, setShowLoading] = React.useState(false);
-
   const apiPath = () => {
     if (process.env.NODE_ENV == "development") {
       return "http://localhost:4000";
@@ -24,19 +20,16 @@ function GoogleAuthLogin({ title }) {
         "https://www.googleapis.com/oauth2/v3/userinfo",
         {
           headers: {
-            Authorization: `Bearer ${credentialResponse.access_token}`,
+            Authorization: `${credentialResponse.access_token}`,
           },
-        },
+        }
       );
       const uInfo = userInfo.data;
       console.log(uInfo);
       const subId = uInfo.sub;
       fetch(`${apiPath()}/login?sub=${subId}`, {
         headers: {
-          Authorization: jwt.sign({ type: "JWT", sub: subId }, AUTH_KEY, {
-            expiresIn: "10s",
-            issuer: "FunGoogleLogin",
-          }),
+          Authorization: `Bearer`,
         },
       })
         .then((res) => {
@@ -57,7 +50,7 @@ function GoogleAuthLogin({ title }) {
                   window.location.reload();
                   localStorage.setItem(
                     "UserToken",
-                    credentialResponse.access_token,
+                    credentialResponse.access_token
                   );
                   localStorage.setItem("UserName", uInfo.name);
                   localStorage.setItem("UserEmail", uInfo.email);

@@ -40,6 +40,9 @@ function App() {
       {/*</div>*/}
       <Routes>
         <Route path="/" exact element={<Home />}></Route>
+        {/* <Route path="/" exact>
+          <h1>점검중입니다.</h1>
+        </Route> */}
         {/*<Route path="/install" exact element={<InstallView />}></Route>*/}
         {/*<Route path="/signup" exact>*/}
         {/*  <SignUpView />*/}

@@ -1,16 +1,15 @@
 .greyLink {
-    color: #c3c3c3;
-    text-decoration: none;
-
-    &:hover {
-        color: #bcbcbc;
-    }
+  color: #c3c3c3 !important;
+  text-decoration: none !important;
+  &:hover {
+    color: #bcbcbc !important;
+  }
 }
 
 .smallAlertContainer {
-    /*max-width: 40vw;*/
-    position: fixed;
-    bottom: 20px;
-    right: 20px
-    /*justify-content: left !important;*/
+  /*max-width: 40vw;*/
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  /*justify-content: left !important;*/
 }
