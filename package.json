@@ -1,7 +1,7 @@
 {
   "name": "fun",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -62,5 +62,20 @@
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "url": "^0.11.3"
-  }
+  },
+  "license": "MIT",
+  "description": "# Changelog",
+  "main": "config-overrides.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jonathan0827/Fun.git"
+  },
+  "keywords": [
+    "Korean"
+  ],
+  "author": "Jun Hyeop (Jonathan0827)",
+  "bugs": {
+    "url": "https://github.com/Jonathan0827/Fun/issues"
+  },
+  "homepage": "https://github.com/Jonathan0827/Fun#readme"
 }
