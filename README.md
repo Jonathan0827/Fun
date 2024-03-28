@@ -6,13 +6,13 @@
 
 ### 한글
 
-- 인증 토큰 발행 모듈 변경
+- iOS 버전을 위한 인증 토큰 발행 모듈 변경
 - 돌아가기 기능 개선
 - 추후 업데이트를 위한 준비
 
 ### English
 
-- Changed authentication token issuance module
+- Changed authentication token issuance module for iOS version
 - Improved return function
 - Preparation for future updates
 
