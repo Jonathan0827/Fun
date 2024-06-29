@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Btn, GBtn } from "./Button";
 import axios from "axios";
 import { Alert, Backdrop } from "@mui/material";
-import { AuthToken } from "../AESAuthToken";
+import AuthToken from "../AESAuthToken";
 
 function GoogleAuthLogin({ title }) {
   const [showLoading, setShowLoading] = React.useState(false);
@@ -20,7 +20,7 @@ function GoogleAuthLogin({ title }) {
         "https://www.googleapis.com/oauth2/v3/userinfo",
         {
           headers: {
-            Authorization: `${credentialResponse.access_token}`,
+            Authorization: `Bearer ${credentialResponse.access_token}`,
           },
         }
       );
@@ -29,7 +29,7 @@ function GoogleAuthLogin({ title }) {
       const subId = uInfo.sub;
       fetch(`${apiPath()}/login?sub=${subId}`, {
         headers: {
-          Authorization: `Bearer`,
+          Authorization: AuthToken(subId),
         },
       })
         .then((res) => {
